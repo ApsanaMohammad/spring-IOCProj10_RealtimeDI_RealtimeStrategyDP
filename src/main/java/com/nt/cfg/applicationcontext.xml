@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!-- Define the data source bean -->
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+    <property name="url" value="jdbc:mysql://localhost:3306/Proj10DB" />
+    <property name="username" value="root" />
+    <property name="password" value="apsana@777" />
+</bean>
+
+
+
+  <bean id="customerDAO" class="com.nt.dao.CustomerDAOImpl">
+    <constructor-arg name="dataSource" ref="dataSource" />
+</bean>
+
+
+
+    <!-- Define the CustomerMgmtService implementation bean -->
+    <bean id="customerService" class="com.nt.service.CustomerMgmtServiceImpl">
+        <constructor-arg name="dao" ref="customerDAO" />
+    </bean>
+
+    <!-- Define the MainController bean -->
+    <bean id="controller" class="com.nt.controller.MainController">
+        <constructor-arg name="service" ref="customerService" />
+    </bean>
+
+</beans>
